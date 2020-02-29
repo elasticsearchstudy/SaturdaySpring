@@ -15,8 +15,9 @@ public class HomeController {
 	
 	@RequestMapping(value = "/", method =RequestMethod.GET)
 	public String home(Model model) {
-		model.addAttribute("text", "Test Spring page ");
+//		model.addAttribute("text", "Test Spring page ");
 		try {
+			model.addAttribute("text", dao.selectTest());
 			System.out.println(dao.selectTest());
 		}catch(Exception e) {
 			e.printStackTrace();
