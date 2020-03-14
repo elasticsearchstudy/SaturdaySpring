@@ -9,3 +9,5 @@ target/
 
 pom.properties
 MANIFEST.MF
+target/
+.idea/

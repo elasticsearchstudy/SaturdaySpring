@@ -11,17 +11,24 @@ import com.study.seoul.dao.impl.ExampleDao;
 @Controller
 public class HomeController {
 	
-	@Autowired ExampleDao dao;
+	private ExampleDao dao;
+	
+	@Autowired
+	public void HomeController( ExampleDao dao) {
+		this.dao = dao;
+	}
+
 	
 	@RequestMapping(value = "/", method =RequestMethod.GET)
 	public String home(Model model) {
-//		model.addAttribute("text", "Test Spring page ");
+		String result ="";
 		try {
-			model.addAttribute("text", dao.selectTest());
-			System.out.println(dao.selectTest());
-		}catch(Exception e) {
+			result= dao.selectTest();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		model.addAttribute("text", result);
 		return "index";
 	}
 
