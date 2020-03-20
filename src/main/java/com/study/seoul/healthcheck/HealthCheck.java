@@ -1,5 +1,5 @@
 package com.study.seoul.healthcheck;
 
-public class Healthcheck {
+public class HealthCheck {
 
 }
