@@ -2,9 +2,40 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="mappers.mydao-mapper">
+  	
 	<select id="s000" resultType="String">
 		SELECT USER_NAME 
 		  FROM USER_LOGIN_TABLE 
 		 WHERE USER_ID = 'spinut' 
 	</select>
+	
+	<insert id="i000">
+		INSERT INTO SEND_MAIL(
+		SEND_DATE
+		, RECV_MAIL_ADDR
+		, MAIL_SUBJECT
+		, MAIL_TEXT
+		, TRX_ID
+		, REG_DATE
+		, REG_TIME
+		, CHG_DATE
+		, CHG_TIME
+		 )
+		 VALUES(
+		 #{sendDate}
+		 ,#{recvMailAddr}
+		 ,#{mailSubject}
+		 ,#{mailText}
+		 ,#{trxId}
+		 ,#{regDate}
+		 ,#{regTime}
+		 ,#{chgDate}
+		 ,#{chgTime}
+		 )
+	</insert>
+	<select id="s001" resultType="Integer">
+		SELECT IFNULL(MAX(MAIL_SEQ), 3) + 1 AS SEQ 
+		  FROM SEND_MAIL 
+	</select>
+	
   </mapper>
