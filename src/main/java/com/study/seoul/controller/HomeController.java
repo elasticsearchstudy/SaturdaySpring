@@ -27,7 +27,7 @@ public class HomeController {
 	}
 
 	
-	@RequestMapping(value = "/", method =RequestMethod.GET)
+	@RequestMapping(value = "/test", method =RequestMethod.GET)
 	public String home(Model model) {
 		String result ="";
 		try {
@@ -37,7 +37,7 @@ public class HomeController {
 			
 			SendMailVO mail = new SendMailVO();
 			mail.setSendDate("20200320");
-			mail.setRecvMailAddr("spinut14@gmail.com");
+//			mail.setRecvMailAddr("spinut14@gmail.com");
 			mail.setMailSubject("Test Mail Send");
 			mail.setMailText("system is unstable please check it.");
 			System.out.println(mail.getRegDate());
