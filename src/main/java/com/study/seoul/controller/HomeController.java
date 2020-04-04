@@ -35,15 +35,17 @@ public class HomeController {
 			
 			SendMailVO mail = new SendMailVO();
 			mail.setSendDate("20200320");
-			mail.setRecvMailAddr("spinut14@gmail.com");
+			mail.setRecvMailAddr("kdy0573@daum.net");
 			mail.setMailSubject("Test Mail Send");
 			mail.setMailText("system is unstable please check it.");
-			System.out.println(mail.getRegDate());
-			System.out.println(mail.getRegTime());
-			System.out.println(mail.getChgDate());
-			System.out.println(mail.getChgTime());
-			System.out.println(mail.getTrxId());
-			sendNotice.sendEmail(mail);
+			// sendNotice.sendEmail(mail);
+			mail = new SendMailVO();
+			mail.setSendDate("20200320");
+			mail.setRecvMailAddr("sungjunhwang86@gmail.com");
+			mail.setMailSubject("Test Mail Send");
+			mail.setMailText("system is unstable please check it.");
+			// sendNotice.sendEmail(mail);
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
