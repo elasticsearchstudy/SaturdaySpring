@@ -12,7 +12,11 @@
 
 	<context:component-scan	base-package="com.study.seoul" />
 	
-	<mvc:annotation-driven />
+	<mvc:annotation-driven >
+		<mvc:message-converters>
+			<bean class = "org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"></bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
 	<mvc:default-servlet-handler/>
 	<mvc:resources mapping="/resources/**" location="/resources/images/"/>
 
