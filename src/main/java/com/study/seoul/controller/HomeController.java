@@ -25,7 +25,7 @@ public class HomeController {
 	}
 
 	
-	@RequestMapping(value = "/", method =RequestMethod.GET)
+	@RequestMapping(value = "/mail", method =RequestMethod.GET)
 	public String home(Model model) {
 		String result ="";
 		try {
