@@ -3,8 +3,10 @@ package com.study.seoul.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.study.seoul.comm.service.impl.SendNoticeServiceImpl;
 import com.study.seoul.comm.vo.SendMailVO;
@@ -35,15 +37,17 @@ public class HomeController {
 			
 			SendMailVO mail = new SendMailVO();
 			mail.setSendDate("20200320");
-			mail.setRecvMailAddr("spinut14@gmail.com");
+			mail.setRecvMailAddr("kdy0573@daum.net");
 			mail.setMailSubject("Test Mail Send");
 			mail.setMailText("system is unstable please check it.");
-			System.out.println(mail.getRegDate());
-			System.out.println(mail.getRegTime());
-			System.out.println(mail.getChgDate());
-			System.out.println(mail.getChgTime());
-			System.out.println(mail.getTrxId());
-			sendNotice.sendEmail(mail);
+			// sendNotice.sendEmail(mail);
+			mail = new SendMailVO();
+			mail.setSendDate("20200320");
+			mail.setRecvMailAddr("sungjunhwang86@gmail.com");
+			mail.setMailSubject("Test Mail Send");
+			mail.setMailText("system is unstable please check it.");
+			// sendNotice.sendEmail(mail);
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -52,4 +56,9 @@ public class HomeController {
 		return "index";
 	}
 
+	@GetMapping("/healthcheck")
+	public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
+		model.addAttribute("name", name);
+		return "healthcheck";
+	}
 }

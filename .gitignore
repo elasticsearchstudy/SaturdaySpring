@@ -2,6 +2,14 @@
 target/
 .classpath
 .project
+./target/
+
+# Compiled class file
+*.class
+
+pom.properties
+MANIFEST.MF
+
 target/
 .idea/
 
