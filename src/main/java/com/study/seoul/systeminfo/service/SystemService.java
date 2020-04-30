@@ -61,9 +61,12 @@ public class SystemService {
                 int pid = p.getProcessID();
                 float cpuUsage = (float) (100d * (p.getKernelTime() + p.getUserTime()) / p.getUpTime());
                 float memoryUsage = (float)100d * p.getResidentSetSize() / memory.getTotal();
-                String virtualSizeUsage = FormatUtil.formatBytes(p.getVirtualSize());
-                String residentSetSize = FormatUtil.formatBytes(p.getResidentSetSize());
+                float virtualSizeUsage = p.getVirtualSize();
+                float residentSetSize = p.getResidentSetSize();
                 String javaProcessName = jps.get(String.valueOf(p.getProcessID()));
+//                String virtualSizeUsage = FormatUtil.formatBytes(p.getVirtualSize());
+//                String residentSetSize = FormatUtil.formatBytes(p.getResidentSetSize());
+//                String javaProcessName = jps.get(String.valueOf(p.getProcessID()));
 
                 currentJavaProcess.add(
                         new JavaProcessInfo( pid, cpuUsage, memoryUsage, virtualSizeUsage,
@@ -85,7 +88,7 @@ public class SystemService {
     }
 
     public List<JavaProcessInfo> getJavaProcessList(){
-        return javaProcessRepository.getProcess();
+        return javaProcessRepository.findAll();
     }
 
     //parsing jps info using commandline
@@ -104,7 +107,6 @@ public class SystemService {
                 if(javaProcess.length==2){
                     javaProcesses.put(javaProcess[0],javaProcess[1]);
                 }
-
                 if (line == null)
                     break;
             }

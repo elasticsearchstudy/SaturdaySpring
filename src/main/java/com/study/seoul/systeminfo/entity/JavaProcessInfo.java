@@ -13,16 +13,25 @@ public class JavaProcessInfo {
     private int pid ;
     private float cpuUsage ;
     private float memoryUsage ;
-    private String virtualSizeUsage ;
-    private String residentSetSize ;
-    private String javaProcessName ;
 
-    public JavaProcessInfo(int pid, float cpuUsage, float memoryUsage, String virtualSizeUsage, String residentSetSize, String javaProcessName, LocalDateTime localDateTime) {
+    private float virtualSizeUsage ;
+    private float residentSetSize ;
+    private String name ;
+//
+//    public JavaProcessInfo(float cpuUsage, float memoryUsage, float virtualSizeUsage, float residentSetSize, String javaProcessName) {
+//        this.cpuUsage = cpuUsage;
+//        this.memoryUsage = memoryUsage;
+//        this.virtualSizeUsage = virtualSizeUsage;
+//        this.residentSetSize = residentSetSize;
+//        this.javaProcessName = javaProcessName;
+//    }
+
+    public JavaProcessInfo(int pid, float cpuUsage, float memoryUsage, float virtualSizeUsage, float residentSetSize, String name, LocalDateTime localDateTime) {
         this.pid = pid;
         this.cpuUsage = cpuUsage;
         this.memoryUsage = memoryUsage;
         this.virtualSizeUsage = virtualSizeUsage;
         this.residentSetSize = residentSetSize;
-        this.javaProcessName = javaProcessName;
+        this.name = name;
     }
 }
