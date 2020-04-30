@@ -1,9 +1,12 @@
 package com.study.seoul.systeminfo.schedule;
 
 import com.study.seoul.systeminfo.dao.JavaProcessRepository;
+import com.study.seoul.systeminfo.entity.JavaProcessInfo;
 import com.study.seoul.systeminfo.service.SystemService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class ScheduleTask {
@@ -18,8 +21,12 @@ public class ScheduleTask {
 
     @Scheduled(cron="*/5 * * * * *")
     public void saveJavaInfo(){
+        List<JavaProcessInfo> currentJavaProcess = systemService.getCurrentJavaProcess();
+        //TODO. 특정 수치 이상이면 메일로알람 메세지보내기
+        //currentJavaProcess 를 사용해서 특정 확인
+
         //TODO. repository에 저장하기
-        javaProcessRepository.saveProcess(systemService.getCurrentJavaProcess());
+        javaProcessRepository.saveProcess(currentJavaProcess);
     }
 
 }
