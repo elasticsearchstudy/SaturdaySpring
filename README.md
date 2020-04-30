@@ -30,4 +30,18 @@ javaProcessName
   TODO
   - 원격 사이트들의 주소 관리 
   - 원격사이트들의 주소들을 배치로 확인하고 로그를 기록
-  
+
+###추가 된 부분 2020/04/30
+create SystemInfo database table 2020/04/30
+```sql
+create table PROCESSHISTORY(
+pid bigInt,
+cpuUsage float,
+memoryUsage float,
+virtualSizeUsage float,
+residentSetSize float,
+name varchar(40),
+logtime timestamp
+);
+``` 
+

@@ -2,8 +2,11 @@ package com.study.seoul.systeminfo.service;
 
 import com.study.seoul.systeminfo.dao.JavaProcessRepository;
 import com.study.seoul.systeminfo.entity.JavaProcessInfo;
+import org.apache.ibatis.jdbc.Null;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;
@@ -28,15 +31,21 @@ public class SystemService {
     private HardwareAbstractionLayer hardwareAbstractionLayer;
     private CentralProcessor cpu;
     private OperatingSystem operatingSystem;
+//    @Autowired
     private JavaProcessRepository javaProcessRepository;
     //    private Map<String,String> value;
-
     public SystemService( JavaProcessRepository javaProcessRepository){
+        this.javaProcessRepository = javaProcessRepository;
+
         this.systemInfo = new SystemInfo();
         this.hardwareAbstractionLayer = systemInfo.getHardware();
         this.cpu = hardwareAbstractionLayer.getProcessor();
         this.operatingSystem = systemInfo.getOperatingSystem();
 
+    }
+    public List<JavaProcessInfo> getByJavaProcessId(String pid){
+
+        return javaProcessRepository.findById(pid);
     }
 
 
@@ -61,31 +70,28 @@ public class SystemService {
                 int pid = p.getProcessID();
                 float cpuUsage = (float) (100d * (p.getKernelTime() + p.getUserTime()) / p.getUpTime());
                 float memoryUsage = (float)100d * p.getResidentSetSize() / memory.getTotal();
-                String virtualSizeUsage = FormatUtil.formatBytes(p.getVirtualSize());
-                String residentSetSize = FormatUtil.formatBytes(p.getResidentSetSize());
+                float virtualSizeUsage = p.getVirtualSize();
+                float residentSetSize = p.getResidentSetSize();
                 String javaProcessName = jps.get(String.valueOf(p.getProcessID()));
+//                String virtualSizeUsage = FormatUtil.formatBytes(p.getVirtualSize());
+//                String residentSetSize = FormatUtil.formatBytes(p.getResidentSetSize());
+//                String javaProcessName = jps.get(String.valueOf(p.getProcessID()));
 
                 currentJavaProcess.add(
                         new JavaProcessInfo( pid, cpuUsage, memoryUsage, virtualSizeUsage,
-                                residentSetSize, javaProcessName, localDateTime));
-                //Print JavaInfo Format
-//                oshi.add(String.format(" %5d %5.1f %4.1f %9s %9s %s",
-//                        p.getProcessID(),// Process ID
-//                        100d * (p.getKernelTime() + p.getUserTime()) / p.getUpTime(),//CPU Usage
-//                        100d * p.getResidentSetSize() / memory.getTotal(), // memory usage
-//                        FormatUtil.formatBytes(p.getVirtualSize()), // virtualSize usage
-//                        FormatUtil.formatBytes(p.getResidentSetSize()), // residentSetSize
-////                        p.getName()))
-//                        jps.get(String.valueOf(p.getProcessID()))))
-//                ;
+                                residentSetSize, javaProcessName));
             }
 
         }
         return currentJavaProcess;
     }
 
-    public List<JavaProcessInfo> getJavaProcessList(){
-        return javaProcessRepository.getProcess();
+    public List<JavaProcessInfo> findAll(){
+        List<JavaProcessInfo> processes =  javaProcessRepository.findAll();
+
+        if(Optional.of(processes).isPresent()==false)
+            throw new NullPointerException("null 입니다");
+        return processes;
     }
 
     //parsing jps info using commandline
@@ -104,7 +110,6 @@ public class SystemService {
                 if(javaProcess.length==2){
                     javaProcesses.put(javaProcess[0],javaProcess[1]);
                 }
-
                 if (line == null)
                     break;
             }
