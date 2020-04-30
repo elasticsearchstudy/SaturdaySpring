@@ -7,6 +7,6 @@ import java.util.List;
 public interface SystemDao {
 
     void saveProcess(JavaProcessInfo javaProcessInfo);
-    void findById(String processId);
+    List<JavaProcessInfo> findById(String processId);
     List<JavaProcessInfo> findAll();
 }

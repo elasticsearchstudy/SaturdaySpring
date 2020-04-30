@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class ScheduleTask {
     }
 
     @Scheduled(cron="*/5 * * * * *")
+    @Transactional
     public void saveJavaInfo(){
         List<JavaProcessInfo> currentJavaProcess = systemService.getCurrentJavaProcess();
         //TODO. 특정 수치 이상이면 메일로알람 메세지보내기

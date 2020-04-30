@@ -3,12 +3,9 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mappers.system-mapper">
 
-    <resultMap id = "processes" type = "com.study.seoul.systeminfo.entity.JavaProcessInfo">
-        <result property = "pid" column = "PID"/>
-    </resultMap>
 
-    <select id="findAll" resultMap="processes">
-        select * from processhistory;
+    <select id="findAll" resultType="com.study.seoul.systeminfo.entity.JavaProcessInfo">
+        select * from PROCESSHISTORY;
     </select>
 
     <insert id="saveProcess">

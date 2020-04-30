@@ -1,13 +1,11 @@
 package com.study.seoul.systeminfo.dao;
 
 import com.study.seoul.systeminfo.entity.JavaProcessInfo;
-import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
-import java.util.ArrayList;
 
 @Component
 public class JavaProcessRepository implements SystemDao{
@@ -24,16 +22,16 @@ public class JavaProcessRepository implements SystemDao{
     }
 
     @Override
-    public void findById(String processId) {
+    public List<JavaProcessInfo> findById(String processId) {
         //mapper name selectListByID
         List<JavaProcessInfo> javaProcessInfo = sqlSessionTemplate.selectList(nameSpace + ".javaProcessInfo", processId);
 
+        return javaProcessInfo;
     }
 
     @Override
     public List<JavaProcessInfo> findAll() {
         //mapper name : //readProcesses
-
         List<JavaProcessInfo> processes = sqlSessionTemplate.selectList(nameSpace + ".findAll");
         return processes;
     }

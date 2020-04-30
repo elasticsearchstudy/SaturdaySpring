@@ -3,6 +3,7 @@ package com.study.seoul.systeminfo.controller;
 import com.study.seoul.systeminfo.dao.JavaProcessRepository;
 import com.study.seoul.systeminfo.entity.JavaProcessInfo;
 import com.study.seoul.systeminfo.service.SystemService;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,7 +19,7 @@ public class SystemController {
 
     }
 
-    @RequestMapping(value ="/java/current/list")
+    @RequestMapping(value ="/java/current")
     public List<JavaProcessInfo> getCurrentJavaProcesses(){
         List<JavaProcessInfo> currentJavaProcess = systemService.getCurrentJavaProcess();
         return currentJavaProcess;
@@ -27,9 +28,14 @@ public class SystemController {
     @RequestMapping(value = "/java/list")
     public List<JavaProcessInfo> getJavaProcesses(){
 
-        return systemService.getJavaProcessList();
+        return systemService.findAll();
     }
 
+    @RequestMapping(value = "/java/{pid}")
+    public List<JavaProcessInfo> getJavaProcessesById(@PathVariable String pid){
+
+        return systemService.getByJavaProcessId(pid);
+    }
     @RequestMapping(value="/")
     public String helloProject(){
         return "Hello Saturday Spring";
