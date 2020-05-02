@@ -5,7 +5,7 @@
 
 
     <select id="findAll" resultType="com.study.seoul.systeminfo.entity.JavaProcessInfo">
-        select * from PROCESSHISTORY;
+        select * from PROCESSHISTORY ;
     </select>
 
     <insert id="saveProcess">
@@ -31,7 +31,7 @@
     </insert>
 
     <select id = "selectListByID" resultType="com.study.seoul.systeminfo.entity.JavaProcessInfo">
-        select * from ProcessHistory where #{processId}
+        select * from PROCESSHISTORY where pid = #{processId}
     </select>
 
 </mapper>

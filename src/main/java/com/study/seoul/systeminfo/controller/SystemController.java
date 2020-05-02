@@ -24,7 +24,7 @@ public class SystemController {
         List<JavaProcessInfo> currentJavaProcess = systemService.getCurrentJavaProcess();
         return currentJavaProcess;
     }
-
+//데이터베이스에서 조회하는거
     @RequestMapping(value = "/java/list")
     public List<JavaProcessInfo> getJavaProcesses(){
 
