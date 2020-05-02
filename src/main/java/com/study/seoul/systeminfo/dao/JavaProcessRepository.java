@@ -24,8 +24,7 @@ public class JavaProcessRepository implements SystemDao{
     @Override
     public List<JavaProcessInfo> findById(String processId) {
         //mapper name selectListByID
-        List<JavaProcessInfo> javaProcessInfo = sqlSessionTemplate.selectList(nameSpace + ".javaProcessInfo", processId);
-
+        List<JavaProcessInfo> javaProcessInfo = sqlSessionTemplate.selectList(nameSpace + ".selectListByID", processId);
         return javaProcessInfo;
     }
 
