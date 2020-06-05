@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="mappers.targetdao-mapper">
+	<select id="r000" parameterType="com.study.seoul.comm.vo.TargetVO" resultType="com.study.seoul.comm.vo.TargetVO" >
+		SELECT SEQ
+		       ,TG_SITE
+		       ,TRX_ID
+		       ,REG_DATE
+		       ,REG_TIME
+		  FROM TARGET_SITE
+		 WHERE TG_SITE like '%${tgSite}%'
+	</select>
+
+	<update id="u000" parameterType="com.study.seoul.comm.vo.TargetVO">
+		UPDATE TARGET_SITE
+		   SET TG_SITE = #{tgSite} 
+		 WHERE SEQ = #{seq}
+	</update>
+	
+	<select id="s000" parameterType="com.study.seoul.comm.vo.TargetVO" resultType="com.study.seoul.comm.vo.TargetVO" >
+		SELECT SEQ
+		       ,TG_SITE
+		       ,TRX_ID
+		       ,REG_DATE
+		       ,REG_TIME
+		  FROM TARGET_SITE
+		 WHERE SEQ = #{seq}
+		   AND TG_SITE = #{tgSite}
+	</select>
+	
+	<insert id="i000" parameterType="com.study.seoul.comm.vo.TargetVO" >
+		INSERT INTO TARGET_SITE
+		      (
+		       SEQ
+		       ,TG_SITE
+		       ,TRX_ID
+		       ,REG_DATE
+		       ,REG_TIME
+		       ,CHG_DATE
+		       ,CHG_TIME
+		      ) 
+		      VALUES
+		      (
+		      #{seq},
+		      #{tgSite},
+		      #{trxId},
+		      #{regDate},
+		      #{regTime},
+		      #{chgDate},
+		      #{chgTime}
+		      )
+	</insert>
+	<select id="s001" resultType="int" >
+		SELECT IFNULL(MAX(SEQ), 0)+1
+		  FROM TARGET_SITE
+	</select>
+	
+	<select id="d000" resultType="com.study.seoul.comm.vo.TargetVO" >
+		DELETE FROM TARGET_SITE 
+		       WHERE TG_SITE = #{tgSite} 
+		         AND SEQ = #{seq}
+	</select>
+	
+  </mapper>

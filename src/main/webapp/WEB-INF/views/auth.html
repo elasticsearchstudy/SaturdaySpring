@@ -1,0 +1,35 @@
+<%@ page contentType="text/html; charset=utf-8"%>
+<html>
+<head>
+<script type="text/javascript">
+
+	
+	function AuthSubmit() {
+		// email 입력정보 가져오기
+		var str = document.getElementById('passwd').value;
+		
+		// 입력된 정보가 없을 경우
+		if(str == ""){
+			alert("please type the email!!!!")
+			return false;
+		}else{
+			// 통과하면 form을 전송한다.
+			document.getElementById('frm').submit();
+			return true;
+		}
+	}
+</script>
+</head>
+<body>
+	<h2>Authentification Page</h2>
+
+	<form action="loginAuth" method="post" id="frm">
+		<div>
+			Please type the Authentification code <input type="text" name="passwd" id="passwd" />
+			<input type="hidden" name="userId" id="userId" value="${userId}"/>
+			<input type="button" onclick="AuthSubmit();" value="Auth" />
+		</div>
+	</form>
+
+</body>
+</html>

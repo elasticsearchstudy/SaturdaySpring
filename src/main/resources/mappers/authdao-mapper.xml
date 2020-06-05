@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="mappers.authdao-mapper">
+  	
+	<update id="u000" parameterType="com.study.seoul.comm.vo.LoginVO">
+	    
+		UPDATE USER_LOGIN_TABLE
+		   SET PASSWD = #{passwd}
+		 WHERE USER_ID = #{userId}
+
+	</update>
+	
+	<select id="s000" parameterType="com.study.seoul.comm.vo.LoginVO" resultType="String">
+		SELECT USER_EMAIL 
+		  FROM USER_LOGIN_TABLE
+		 WHERE USER_ID = #{userId}
+	
+	</select>
+	
+	<select id="s001" parameterType="com.study.seoul.comm.vo.LoginVO" resultType="com.study.seoul.comm.vo.LoginVO" >
+		SELECT USER_ID
+		       ,PASSWD
+		  FROM USER_LOGIN_TABLE
+		 WHERE USER_ID = #{userId}
+		   AND PASSWD = #{passwd} 
+	</select>
+
+	
+  </mapper>

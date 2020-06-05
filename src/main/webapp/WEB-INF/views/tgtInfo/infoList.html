@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Target Info List</title>
+<!-- bootstrap css -->
+<link rel="stylesheet" href="/css/bootstrap.css">
+
+<!-- Jquery & bootstrap -->
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	var storedData;
+	function getListData() {
+		// delete all row data before getData
+		delRow();
+		var reqData = new Object();
+		reqData.tgSite = $("#inqTgSite").val();
+		console.log(reqData);
+		$.ajax({
+			url : "/tgt/getListData",
+			data : JSON.stringify(reqData),
+			contentType : 'application/json',
+			type : "POST",
+			dataType : "json"
+		})
+		// when complete	
+		.done(function(json) {
+			addData(json);
+		})
+		// when error	
+		.fail(function(xhr, status, errorThrown) {
+
+		})
+		// always
+		.always(function(xhr, status) {
+
+		});
+	}
+
+	function modifyData() {
+
+		var reqData = new Object();
+		reqData.tgSite = $('#tgSite').val();
+		reqData.seq = $('#seq').val();
+		console.log(reqData);
+		
+		
+		$.ajax({
+			url : "/tgt/modifyData",
+			data : JSON.stringify(reqData),
+			contentType : 'application/json',
+			type : "POST",
+			dataType : "json"
+		})
+		// when complete	
+		.done(function(json) {
+			$('#tgSite')	.val('');
+			alert("정상 처리 되었습니다.");
+			getListData();
+		})
+		// when error	
+		.fail(function(xhr, status, errorThrown) {
+			alert("오류가 발생 하였습니다.");
+		})
+		// always
+		.always(function(xhr, status) {
+
+		});
+	}
+
+	function addData(json) {
+		storedData = json;
+		console.log(json.data.length);
+		var len = json.data.length;
+		var col = Object.getOwnPropertyNames(json.data[0]);
+		console.log(col[0]);
+		var rowData = '';
+		// row
+		for (var i = 0; i < len; i++) {
+			rowData = '';
+			rowData += '<tr>';
+			// column
+			for (key in json.data[i]) {
+				rowData += '<td onClick="rowModify(' + i + ')">';
+				rowData += json.data[i][key];
+				rowData += '</td>';
+			}
+			rowData += '</tr>';
+			$('#tgtList').append(rowData);
+		}
+
+	}
+
+	
+	function newData() {
+		
+		// 1. disabled 제거
+		$('#tgSite')	.removeAttr("disabled");
+		
+		// 2. button disabled 제거
+		$('#regBtn')	.removeAttr("disabled");
+		
+		// 3. button disabled 추가
+		$('#modBtn')	.attr("disabled", true);
+		$('#delBtn')	.attr("disabled", true);
+		
+		// 4. Data 초기화
+		$('#tgSite')	.val('');
+
+	}
+	
+	function regData() {
+		var reqData = new Object();
+		reqData.tgSite = $("#tgSite").val();
+		console.log(reqData);
+		$.ajax({
+			url : "/tgt/regData",
+			data : JSON.stringify(reqData),
+			contentType : 'application/json',
+			type : "POST",
+			dataType : "json"
+		})
+		// when complete	
+		.done(function(json) {
+			alert("정상 등록 되었습니다.");
+			getListData();
+			
+		})
+		// when error	
+		.fail(function(xhr, status, errorThrown) {
+			alert("오류가 발생 하였습니다.");
+		})
+		// always
+		.always(function(xhr, status) {
+
+		});
+	}
+	
+	function delData() {
+		var reqData = new Object();
+		reqData.tgSite = $("#tgSite").val();
+		reqData.seq = $("#seq").val();
+		console.log(reqData);
+		$.ajax({
+			url : "/tgt/delData",
+			data : JSON.stringify(reqData),
+			contentType : 'application/json',
+			type : "POST",
+			dataType : "json"
+		})
+		// when complete	
+		.done(function(json) {
+			$('#tgSite')	.val('');
+			alert("삭제가 완료되었습니다.");
+			getListData();
+		})
+		// when error	
+		.fail(function(xhr, status, errorThrown) {
+			alert("오류가 발생 하였습니다.");
+		})
+		// always
+		.always(function(xhr, status) {
+
+		});
+	}
+	
+	function delRow() {
+		$('#tgtList > tbody > tr').remove();
+	}
+
+	function rowModify(row) {
+		// 값 세팅
+		$('#tgSite')	.val(storedData.data[row].tgSite);
+		$('#seq')		.val(storedData.data[row].seq);
+		$('#tgSite')	.removeAttr('disabled');
+		$('#regBtn')	.attr('disabled', true);
+		$('#modBtn')	.removeAttr('disabled');
+		$('#delBtn')	.removeAttr('disabled');
+	}
+</script>
+
+<!-- <link rel="stylesheet" href="/css/bootstrap.min.css"> -->
+</head>
+<body>
+
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="#">Mornitoring</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+			aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+			<div class="navbar-nav">
+				<a class="nav-item nav-link active" href="getList">System List <span	class="sr-only">(current)</span></a> 
+				<a class="nav-item nav-link" href="#">Java Process</a> 
+			</div>
+		</div>
+	</nav>
+	<div class="container">
+		<div class="row justify-content-md-center">
+		<h1>Target System List</h1>
+		</div>
+		<div class="form-row align-items-center">
+			<div class="col-auto">
+				<label for="inqTgSite">Target Site</label>
+			</div>
+			<div class="col-auto">
+		    	<input type="text" class="form-control mb-2" id="inqTgSite" />
+			</div>
+			<div class="col-auto">
+		    	<button type="button" class="btn btn-primary mb-2" onclick="getListData()"> Search </button>
+			</div>
+		</div>
+		<div class="form-row align-items-center">
+			<table class="table table-striped table-bordered table-hover" id="tgtList">
+				<thead>
+					<tr>
+						<th>No.</th>
+						<th>Target Site</th>
+						<th>Transaction ID</th>
+						<th>Register Date</th>
+						<th>Register Time</th>
+						<th>Change Date</th>
+						<th>Change Time</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+		<div id='formDiv'>
+			<div>
+				<form>
+		 			<div class="form-group">
+		    			<label for="tgSite">Target Site</label>
+		    			<input type="text" class="form-control" id="tgSite" disabled>
+		    			<input type="hidden" id="seq"/>
+		  			</div>
+		  			<button type="button" class="btn btn-primary" onclick="newData()" id="newBtn">New</button>
+		  			<button type="button" class="btn btn-primary" onclick="regData()" id="regBtn">Register</button>
+		  			<button type="button" class="btn btn-primary" onclick="modifyData()" id="modBtn">Modify</button>
+		  			<button type="button" class="btn btn-primary" onclick="delData()" id="delBtn">Delete</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

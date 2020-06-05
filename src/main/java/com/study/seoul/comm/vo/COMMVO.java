@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.Random;
 
 public class COMMVO {
-	private SimpleDateFormat dtFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+	private transient SimpleDateFormat dtFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 	
 	public COMMVO(){
 		Date dt = new Date();

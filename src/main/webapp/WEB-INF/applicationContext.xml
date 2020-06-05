@@ -10,15 +10,33 @@
    				http://www.springframework.org/schema/mvc
    				http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
 
-	<context:component-scan	base-package="com.study.seoul" />
 	
+
 	<mvc:annotation-driven />
 	<mvc:default-servlet-handler/>
-	<mvc:resources mapping="/resources/**" location="/resources/images/"/>
+	<mvc:resources mapping="/resources/**" location="/resources/"/>
+	<mvc:resources mapping="/js/**" location="/resources/js/"/>
+	<mvc:resources mapping="/css/**" location="/resources/css/"/>
+	
 
 	<bean id="viewResolver"	class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/views/" />
-		<property name="suffix" value=".jsp" />
+		<property name="suffix" value=".html" />
 	</bean>
+	<!-- <bean id="authInterceptor" class="com.study.seoul.comm.auth.AuthInterceptor" />
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/*/**"/>
+			<mvc:exclude-mapping path="/"/>
+			<mvc:exclude-mapping path="/error"/>
+			<mvc:exclude-mapping path="/loginPage"/>
+			<mvc:exclude-mapping path="/loginAction"/>
+			<mvc:exclude-mapping path="/loginAuth"/>
+			<mvc:exclude-mapping path="/logout"/>
+			
+			<ref bean="authInterceptor"/>	
+		</mvc:interceptor>
+	</mvc:interceptors> -->
 	
+	<context:component-scan	base-package="com.study.seoul" />
 </beans>
