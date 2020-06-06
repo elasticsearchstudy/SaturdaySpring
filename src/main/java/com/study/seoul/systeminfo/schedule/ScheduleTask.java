@@ -23,7 +23,8 @@ public class ScheduleTask {
         this.javaProcessRepository = javaProcessRepository;
     }
 
-    @Scheduled(cron="*/5 * * * * *")
+//    @Scheduled(cron="*/5 * * * * *")
+    @Scheduled(cron="*/30 * * * * *")
     @Transactional
     public void saveJavaInfo(){
         List<JavaProcessInfo> currentJavaProcess = systemService.getCurrentJavaProcess();

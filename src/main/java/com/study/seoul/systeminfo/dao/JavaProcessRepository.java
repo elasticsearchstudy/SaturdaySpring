@@ -32,6 +32,10 @@ public class JavaProcessRepository implements SystemDao{
     public List<JavaProcessInfo> findAll() {
         //mapper name : //readProcesses
         List<JavaProcessInfo> processes = sqlSessionTemplate.selectList(nameSpace + ".findAll");
+        System.out.println("-------find repository---------");
+        processes.forEach(action->{
+        	System.out.println(action.toString());
+        });
         return processes;
     }
 

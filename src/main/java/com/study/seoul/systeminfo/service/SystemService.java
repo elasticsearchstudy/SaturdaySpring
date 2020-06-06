@@ -19,6 +19,7 @@ import oshi.util.FormatUtil;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -55,7 +56,7 @@ public class SystemService {
         //getJavaProcessMap();
         LocalDateTime localDateTime = LocalDateTime.now();
         Map<String,String> jps= getJavaProcessMap();
-
+        Timestamp now = Timestamp.valueOf(localDateTime);
         logger.info("Processes: " + operatingSystem.getProcessCount() + ", Threads: " + operatingSystem.getThreadCount());
         // Sort by highest CPU
         List<OSProcess> procs = Arrays.asList(operatingSystem.getProcesses(10, OperatingSystem.ProcessSort.CPU));
@@ -79,7 +80,7 @@ public class SystemService {
 
                 currentJavaProcess.add(
                         new JavaProcessInfo( pid, cpuUsage, memoryUsage, virtualSizeUsage,
-                                residentSetSize, javaProcessName));
+                                residentSetSize, javaProcessName ));
             }
 
         }
