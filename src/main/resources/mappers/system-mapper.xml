@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mappers.system-mapper">
+
+
+    <select id="findAll" resultType="com.study.seoul.systeminfo.entity.JavaProcessInfo">
+        select * from PROCESSHISTORY ;
+    </select>
+
+    <insert id="saveProcess">
+       insert into PROCESSHISTORY
+        (
+         pid,
+         cpuUsage ,
+         memoryUsage ,
+         virtualSizeUsage ,
+         residentSetSize,
+         name ,
+        logtime
+         )
+        VALUES(
+        #{pid}
+        ,#{cpuUsage}
+        ,#{memoryUsage}
+        ,#{virtualSizeUsage}
+        ,#{residentSetSize}
+        ,#{name}
+        ,now()
+        )
+    </insert>
+
+    <select id = "selectListByID" resultType="com.study.seoul.systeminfo.entity.JavaProcessInfo">
+        select * from PROCESSHISTORY where pid = #{processId}
+    </select>
+
+</mapper>

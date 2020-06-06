@@ -12,3 +12,5 @@ MANIFEST.MF
 
 target/
 .idea/
+
+src/main/resources/db/database.properties
