@@ -2,6 +2,9 @@ package com.study.seoul.comm.vo;
 
 import java.util.List;
 
+import lombok.Data;
+
+@Data
 public class DataGrid {
 
 	private List<TargetVO> data;

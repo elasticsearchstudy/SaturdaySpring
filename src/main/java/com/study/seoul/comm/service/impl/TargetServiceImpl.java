@@ -53,7 +53,6 @@ public class TargetServiceImpl implements TargetService {
 	public void registerTargetInfo(TargetVO tgtVo) {
 		// TODO Auto-generated method stub
 		int seq = targetDao.getNextSeq();
-		System.out.println("SEQ  : " + seq);
 		tgtVo.setSeq(seq);
 		targetDao.regTargetData(tgtVo);
 	}
@@ -65,7 +64,7 @@ public class TargetServiceImpl implements TargetService {
 	@Override
 	public void delTargetInfo(TargetVO tgtVo) {
 		// TODO Auto-generated method stub
-		
+		targetDao.delTargetInfo(tgtVo);
 	}
 	
 }

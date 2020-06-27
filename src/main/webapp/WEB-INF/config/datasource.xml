@@ -28,6 +28,7 @@
 			<value>classpath:mappers/authdao-mapper.xml</value>
 			<value>classpath:mappers/targetdao-mapper.xml</value>
 			<value>classpath:mappers/system-mapper.xml</value>
+			<value>classpath:mappers/targetstsdao-mapper.xml</value>
 		</list>
 	</property>
 </bean>

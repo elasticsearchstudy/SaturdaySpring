@@ -21,7 +21,6 @@ public class TargetDaoImpl implements TargetDao {
 	@Override
 	public List<TargetVO> getTargetList(TargetVO tgtVo) {
 		// TODO Auto-generated method stub
-		System.out.println(tgtVo.getTgSite());
 		return sqlSession.selectList(NAMESPACE+".r000", tgtVo);
 	}
 	

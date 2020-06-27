@@ -11,12 +11,70 @@
 <script src="/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 	var storedData;
+	
+	/* 
+	<div class="row mx-md-n5">
+		<div class="col px-md-5">
+			<div class="p-3 border bg-light">Columns1</div>
+		</div>
+		<div class="col px-md-5">
+			<div class="p-3 border bg-light">Columns2</div>
+		</div>
+		<div class="col px-md-5">
+			<div class="p-3 border bg-light">Columns2</div>
+		</div>
+	</div> 
+	
+	*/
+	
+	
+	function init(json){
+		console.log(json);
+		var len = json.data.length;
+		console.log(len);
+		console.log(json.data);
+		var col = Object.getOwnPropertyNames(json.data[0]);
+		// table header column
+		var divRow = "";
+		var colCnt = 0;	
+
+		
+		for (var j = 0; j < len; j++) {
+
+			console.log("execute");
+			if(colCnt == 0){
+				divRow = "";
+				divRow += "<div class='row mx-md-n5'>";					// div : row mx-md-n5
+			}
+				divRow += "<div class='col px-md-5'>";
+				divRow += "<div class='p-3 border bg-light'>";
+				divRow += json.data[j]['tgSite'];
+				divRow += "</div>";
+				divRow += "</div>";
+
+			if(colCnt == 2){
+				colCnt = -1;
+				divRow += '</div>';										// div : row mx-md-n5
+				console.log('divRow ' + divRow);
+				$('#monitorDiv').append(divRow);
+			}else{
+				colCnt++;
+			}
+		}
+	}
+	
+	function getJsonVal(obj){
+		if (typeof obj === "undefined"){
+			return "";
+		}else{
+			return obj;
+		}
+	}
+	
+	
 	function getListData() {
-		// delete all row data before getData
-		delRow();
 		var reqData = new Object();
-		reqData.tgSite = $("#inqTgSite").val();
-		console.log(reqData);
+		reqData.tgSite = "";
 		$.ajax({
 			url : "/tgt/getListData",
 			data : JSON.stringify(reqData),
@@ -25,9 +83,8 @@
 			dataType : "json"
 		})
 		// when complete	
-		.done(function(json) {
-			$('#edtTgSite')	.val('');
-			addData(json);
+		.done(function(json){
+			init(json);
 		})
 		// when error	
 		.fail(function(xhr, status, errorThrown) {
@@ -84,7 +141,7 @@
 			// column - JSON의 경우 순서 보장안됨
 			for (var j=0; j<thead.length; j++){
 				rowData += '<td onClick="rowModify(' + i + ')">';
-				rowData += json.data[i][$(thead[j]).attr("id")];
+				rowData += json.data[j][$(thead[j]).attr("id")];
 				rowData += '</td>';
 			}
 			rowData += '</tr>';
@@ -183,11 +240,19 @@
 		$('#delBtn')	.removeAttr('disabled');
 		$('#newBtn')	.removeAttr('disabled');
 	}
+	
+	
+	
+	
+	
+	
+	
+	
 </script>
 
 <!-- <link rel="stylesheet" href="/css/bootstrap.min.css"> -->
 </head>
-<body>
+<body onload="getListData()">
 
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<a class="navbar-brand" href="#">Monitoring</a>
@@ -198,59 +263,19 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 			<div class="navbar-nav">
-				<a class="nav-item nav-link" href="monitor">System Status <span	class="sr-only"></span></a>
-				<a class="nav-item nav-link active" href="getList">System List <span	class="sr-only">(current)</span></a> 
-				<a class="nav-item nav-link" href="#">Java Process</a> 
+				<a class="nav-item nav-link active" href="monitor">System Status
+					<span class="sr-only">(current)</span>
+				</a> <a class="nav-item nav-link" href="getList">System List</a> <a
+					class="nav-item nav-link" href="#">Java Process</a>
 			</div>
 		</div>
 	</nav>
 	<div class="container">
 		<div class="row justify-content-md-center">
-		<h1>Target System List</h1>
+			<h1>System Status</h1>
 		</div>
-		<div class="form-row align-items-center">
-			<div class="col-auto">
-				<label for="inqTgSite">Target Site</label>
-			</div>
-			<div class="col-auto">
-		    	<input type="text" class="form-control mb-2" id="inqTgSite" />
-			</div>
-			<div class="col-auto">
-		    	<button type="button" class="btn btn-primary mb-2" onclick="getListData()"> Search </button>
-			</div>
-		</div>
-		<div class="form-row align-items-center">
-			<table class="table table-striped table-bordered table-hover" id="tgtList">
-				<thead id="theader">
-					<tr>
-						<th id="seq">No.</th>
-						<th id="tgSite">Target Site</th>
-						<th id="trxId">Transaction ID</th>
-						<th id="regDate">Register Date</th>
-						<th id="regTime">Register Time</th>
-						<th id="chgDate">Change Date</th>
-						<th id="chgTime">Change Time</th>
-					</tr>
-				</thead>
-				<tbody>
-				</tbody>
-			</table>
-		</div>
-		<div id='formDiv'>
-			<div>
-				<form>
-		 			<div class="form-group">
-		    			<label for="tgSite">Target Site</label>
-		    			<input type="text" class="form-control" id="edtTgSite" disabled>
-		    			<input type="hidden" id="edtSeq"/>
-		  			</div>
-		  			<button type="button" class="btn btn-primary" onclick="newData()" id="newBtn">New</button>
-		  			<button type="button" class="btn btn-primary" onclick="regData()" id="regBtn">Register</button>
-		  			<button type="button" class="btn btn-primary" onclick="modifyData()" id="modBtn">Modify</button>
-		  			<button type="button" class="btn btn-primary" onclick="delData()" id="delBtn">Delete</button>
-				</form>
-			</div>
-		</div>
+		<div id="monitorDiv"></div>
+
 	</div>
 </body>
 </html>

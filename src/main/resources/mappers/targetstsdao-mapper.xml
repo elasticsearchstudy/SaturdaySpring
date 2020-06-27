@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="mappers.targetstsdao-mapper">
+	<insert id="i000" parameterType="com.study.seoul.comm.vo.TargetStsVO" >
+		INSERT INTO TARGET_STATUS
+		      (
+		       SEQ
+		       ,TG_SITE
+		       ,TRN_DT
+		       ,SITE_STATUS
+		       ,TRX_ID
+		       ,REG_DATE
+		       ,REG_TIME
+		       ,CHG_DATE
+		       ,CHG_TIME
+		      ) 
+		      VALUES
+		      (
+		      #{seq},
+		      #{tgSite},
+		      #{trnDt},
+		      #{siteStatus},
+		      #{trxId},
+		      #{regDate},
+		      #{regTime},
+		      #{chgDate},
+		      #{chgTime}
+		      )
+	</insert>
+	<select id="s001" resultType="int" >
+		SELECT IFNULL(MAX(SEQ), 0)+1
+		  FROM TARGET_STATUS
+		 WHERE TG_SITE = #{tgSite}
+		   AND TRN_DT = #{trnDt}
+	</select>
+	
+	
+  </mapper>
